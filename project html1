@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INES  Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            background: #f8e1f8;
+            
+        }
+        header, nav, main, footer {
+            padding: 20px;
+        }
+        nav {
+            background: #450145;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: rgb(239, 228, 240);
+            text-decoration: none;
+        }
+    
+
+        section {
+            padding: 40px 20px;
+            border-bottom: 1px solid #450145;
+        }
+        footer {
+            background: #450145;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            color: #450145;
+
+        }
+        table, th, td {
+            border: 1px solid #450145;
+            border-radius: 5px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <strong> 
+        <nav>
+             <!-- Disc bullets -->
+
+    <ul type="disc">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        </strong>
+    </header>
+
+    <!-- Home Section -->
+    <main>
+        <section id="home">
+            <strong>  <h1>Bienvenue sur mon Portfolio</h1></strong>
+
+            <p>Je suis CHETIBI INES, développeur web débutant passionné par la création de sites modernes.</p>
+            <!-- Video -->
+            <video width="800"  height="400"    autoplay muted loop>
+                <source src="web design v.mp4" type="video/mp4">
+            </video>
+        </section>
+
+        <!-- About Section -->
+         <h1>À propos de moi</h1>
+         <div style="display: flex; align-items: center; gap: 20px;">
+    <img src="MY PICTURE.jpg" alt="Photo" style="width: 200px; border-radius: 8px;">
+    <div>
+        <p>Etudiante en Management et Entreprenariat passionnée par le design, et apprendre de nouvelles technologies.</p>
+        <ul>
+            <li>HTML, CSS, JavaScript</li>
+            <li>UI/UX Design</li>
+            <li>Apprentissage continu</li>
+        </ul>
+    </div> 
+</div>
+<ul type="square"><br> <h3>CHETIBI INES</h3>  </ul>
+        </section>
+
+        <!-- Work Section -->
+        <section id="work">
+            <h1>Mes projets</h1>
+            <p>Voici quelques exemples :</p>
+            <ul>
+                <li>Site vitrine pour un artisan</li>
+                <li>Application To-Do en JavaScript</li>
+                <li>Portfolio personnel</li>
+            </ul>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume">
+            <h1>Mon parcours</h1>
+            <table>
+                <tr>
+                    <th>Année</th>
+                    <th>Expérience</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>2021-2025</td>
+                    <td>Master en EHEC</td>
+                    <td>OPTION:Mangement et Entreprenariat</td>
+                </tr>
+                <tr>
+                    <td>2025</td>
+                    <td>Formation Dévelloppent web en GOMY CODE </td>
+                    <td>Apprentissage des bases du développement Web</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h1>Contactez-moi</h1>
+            <form action="#" method="post">
+                <label for="name">Nom :</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="email">Email :</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="message">Message :</label><br>
+                <textarea id="message" name="message" rows="5" required></textarea><br><br>
+                <button type="submit">Envoyer</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Mon Portfolio - Tous droits réservés</p>
+    </footer>
+
+</body>
+</html>
