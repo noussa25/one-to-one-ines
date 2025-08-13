@@ -1,0 +1,24 @@
+Algorithm: Sentence Analysis
+Variables:
+`length_count` : integer ← 0
+ `word_count` : integer ← 1
+ `vowel_count` : integer ← 0
+`ch` : character
+Begin
+Read character `ch`
+While `ch` ≠ `'.'` *do
+   length_count` ← `length_count` + 1
+   If `ch` = `' '` **then**
+   \- `word_count` ← `word_count` + 1
+   EndIf
+     If`ch` ∈ {`'a','e','i','o','u','A','E','I','O','U'`} then
+   \- `vowel_count` ← `vowel_count` + 1
+   EndIf
+   Read next character `ch`
+EndWhile
+length_count` ← `length_count` + 1   // To count the final `.`
+ Write "Length = ", `length_count`
+ Write "Words = ", `word_count`
+ Write "Vowels = ", `vowel_count`
+
+End
