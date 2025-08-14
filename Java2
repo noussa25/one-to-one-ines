@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥚 JavaScript Easter Egg Functions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .easter-egg-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .easter-egg-btn:hover {
+            transform: scale(1.1);
+            background: #ff5252;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .function-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .function-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .function-card:hover {
+            transform: translateY(-5px);
+            border-color: #4ecdc4;
+        }
+
+        .function-title {
+            color: #ff6b6b;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+
+        .test-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .test-btn {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .test-btn:hover {
+            background: #45b7d1;
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .success { background: #c6f6d5; color: #22543d; }
+        .error { background: #fed7d7; color: #742a2a; }
+
+        .hidden-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 107, 107, 0.95);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.5s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .floating-emoji {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+            z-index: 999;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .konami-code {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🥚 JavaScript Easter Egg Functions 🥚</h1>
+            <p>Toutes les fonctions demandées avec quelques surprises cachées... 😉</p>
+            <button class="easter-egg-btn" onclick="triggerEasterEgg()">🐰 Clique pour une surprise!</button>
+            <button class="easter-egg-btn" onclick="createFloatingEmoji()">✨ Magic!</button>
+        </div>
+
+        <div class="konami-code">
+            Psst... Essaie le code Konami! ↑↑↓↓←→←→BA
+        </div>
+
+        <div class="function-grid">
+            <!-- String Functions -->
+            <div class="function-card">
+                <div class="function-title">🔄 String Manipulation</div>
+                
+                <h4>1. Reverse String</h4>
+                <div class="code-block">
+function reverseString(str) {
+    // Easter egg: détection de palindromes!
+    const reversed = str.split('').reverse().join('');
+    if (str.toLowerCase() === reversed.toLowerCase()) {
+        console.log("🎉 Palindrome détecté!");
+    }
+    return reversed;
+}</div>
+                
+                <h4>2. Count Characters</h4>
+                <div class="code-block">
+function countCharacters(str) {
+    const count = str.length;
+    // Easter egg: message spécial pour certaines longueurs
+    if (count === 42) {
+        console.log("🌌 42! La réponse à la vie, l'univers et tout le reste!");
+    }
+    return count;
+}</div>
+
+                <h4>3. Capitalize Words</h4>
+                <div class="code-block">
+function capitalizeWords(sentence) {
+    return sentence.split(' ').map(word => {
+        if (word.toLowerCase() === 'javascript') {
+            return '✨' + word.charAt(0).toUpperCase() + word.slice(1) + '✨';
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
+}</div>
+
+                <div class="test-section">
+                    <button class="test-btn" onclick="testStringFunctions()">🧪 Tester les fonctions String</button>
+                    <div id="string-results"></div>
+                </div>
+            </div>
+
+            <!-- Array Functions -->
+            <div class="function-card">
+                <div class="function-title">📊 Array Functions</div>
+                
+                <h4>1. Find Maximum and Minimum</h4>
+                <div class="code-block">
+function findMax(arr) {
+    const max = Math.max(...arr);
+    if (max === 1337) {
+        console.log("🔥 LEET number detected!");
+    }
+    return max;
+}
+
+function findMin(arr) {
+    return Math.min(...arr);
+}</div>
+
+                <h4>2. Sum of Array</h4>
+                <div class="code-block">
+function sumArray(arr) {
+    const sum = arr.reduce((acc, num) => acc + num, 0);
+    // Easter egg: nombres spéciaux
+    if (sum === 100) {
+        console.log("💯 Perfect score!");
+    }
+    return sum;
+}</div>
+
+                <h4>3. Filter Array</h4>
+                <div class="code-block">
+function filterArray(arr, condition) {
+    // Fonction générique avec quelques conditions prédéfinies amusantes
+    const filters = {
+        even: x => x % 2 === 0,
+        odd: x => x % 2 !== 0,
+        positive: x => x > 0,
+        lucky: x => x === 7 || x === 13 || x === 777
+    };
+    
+    const filterFunc = typeof condition === 'string' ? 
+        filters[condition] : condition;
+    
+    return arr.filter(filterFunc);
+}</div>
+
+                <div class="test-section">
+                    <button class="test-btn" onclick="testArrayFunctions()">🧪 Tester les fonctions Array</button>
+                    <div id="array-results"></div>
+                </div>
+            </div>
+
+            <!-- Mathematical Functions -->
+            <div class="function-card">
+                <div class="function-title">🔢 Mathematical Functions</div>
+                
+                <h4>1. Factorial</h4>
+                <div class="code-block">
+function factorial(n) {
+    if (n < 0) return "❌ Pas de factorielle pour les nombres négatifs!";
+    if (n === 0 || n === 1) return 1;
+    
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    
+    // Easter egg pour des nombres spéciaux
+    if (n === 5) console.log("🎲 5! = 120, comme les permutations de 5 éléments!");
+    
+    return result;
+}</div>
+
+                <h4>2. Prime Number Check</h4>
+                <div class="code-block">
+function isPrime(num) {
+    if (num < 2) return false;
+    if (num === 2) {
+        console.log("🥇 2 est le seul nombre premier pair!");
+        return true;
+    }
+    if (num % 2 === 0) return false;
+    
+    for (let i = 3; i <= Math.sqrt(num); i += 2) {
+        if (num % i === 0) return false;
+    }
+    
+    // Easter eggs pour des nombres premiers célèbres
+    if (num === 1337) console.log("🔥 1337 n'est pas premier, mais il est LEET!");
+    if ([2, 3, 5, 7, 11, 13, 17, 19, 23].includes(num)) {
+        console.log("⭐ Un des premiers nombres premiers!");
+    }
+    
+    return true;
+}</div>
+
+                <h4>3. Fibonacci Sequence</h4>
+                <div class="code-block">
+function fibonacci(n) {
+    if (n <= 0) return [];
+    if (n === 1) return [0];
+    if (n === 2) return [0, 1];
+    
+    const sequence = [0, 1];
+    for (let i = 2; i < n; i++) {
+        sequence[i] = sequence[i-1] + sequence[i-2];
+    }
+    
+    // Easter egg: ratio doré
+    if (n > 2) {
+        const ratio = sequence[n-1] / sequence[n-2];
+        if (Math.abs(ratio - 1.618) < 0.01) {
+            console.log("🌟 Approche du nombre d'or (φ ≈ 1.618)!");
+        }
+    }
+    
+    return sequence;
+}</div>
+
+                <div class="test-section">
+                    <button class="test-btn" onclick="testMathFunctions()">🧪 Tester les fonctions Math</button>
+                    <div id="math-results"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="hidden-message" class="hidden-message">
+        <h2>🎉 SURPRISE! 🎉</h2>
+        <p>Félicitations! Vous avez trouvé l'œuf de Pâques!</p>
+        <p>Votre équipe est géniale! 🚀</p>
+        <button onclick="closeHiddenMessage()" style="margin-top: 15px; padding: 10px 20px; background: white; color: #ff6b6b; border: none; border-radius: 5px; cursor: pointer;">Fermer</button>
+    </div>
+
+    <script>
+        // Toutes les fonctions sont définies ici
+        function reverseString(str) {
+            const reversed = str.split('').reverse().join('');
+            if (str.toLowerCase() === reversed.toLowerCase()) {
+                console.log("🎉 Palindrome détecté!");
+            }
+            return reversed;
+        }
+
+        function countCharacters(str) {
+            const count = str.length;
+            if (count === 42) {
+                console.log("🌌 42! La réponse à la vie, l'univers et tout le reste!");
+            }
+            return count;
+        }
+
+        function capitalizeWords(sentence) {
+            return sentence.split(' ').map(word => {
+                if (word.toLowerCase() === 'javascript') {
+                    return '✨' + word.charAt(0).toUpperCase() + word.slice(1) + '✨';
+                }
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }).join(' ');
+        }
+
+        function findMax(arr) {
+            const max = Math.max(...arr);
+            if (max === 1337) {
+                console.log("🔥 LEET number detected!");
+            }
+            return max;
+        }
+
+        function findMin(arr) {
+            return Math.min(...arr);
+        }
+
+        function sumArray(arr) {
+            const sum = arr.reduce((acc, num) => acc + num, 0);
+            if (sum === 100) {
+                console.log("💯 Perfect score!");
+            }
+            return sum;
+        }
+
+        function filterArray(arr, condition) {
+            const filters = {
+                even: x => x % 2 === 0,
+                odd: x => x % 2 !== 0,
+                positive: x => x > 0,
+                lucky: x => x === 7 || x === 13 || x === 777
+            };
+            
+            const filterFunc = typeof condition === 'string' ? 
+                filters[condition] : condition;
+            
+            return arr.filter(filterFunc);
+        }
+
+        function factorial(n) {
+            if (n < 0) return "❌ Pas de factorielle pour les nombres négatifs!";
+            if (n === 0 || n === 1) return 1;
+            
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            
+            if (n === 5) console.log("🎲 5! = 120, comme les permutations de 5 éléments!");
+            
+            return result;
+        }
+
+        function isPrime(num) {
+            if (num < 2) return false;
+            if (num === 2) {
+                console.log("🥇 2 est le seul nombre premier pair!");
+                return true;
+            }
+            if (num % 2 === 0) return false;
+            
+            for (let i = 3; i <= Math.sqrt(num); i += 2) {
+                if (num % i === 0) return false;
+            }
+            
+            if (num === 1337) console.log("🔥 1337 n'est pas premier, mais il est LEET!");
+            if ([2, 3, 5, 7, 11, 13, 17, 19, 23].includes(num)) {
+                console.log("⭐ Un des premiers nombres premiers!");
+            }
+            
+            return true;
+        }
+
+        function fibonacci(n) {
+            if (n <= 0) return [];
+            if (n === 1) return [0];
+            if (n === 2) return [0, 1];
+            
+            const sequence = [0, 1];
+            for (let i = 2; i < n; i++) {
+                sequence[i] = sequence[i-1] + sequence[i-2];
+            }
+            
+            if (n > 2) {
+                const ratio = sequence[n-1] / sequence[n-2];
+                if (Math.abs(ratio - 1.618) < 0.01) {
+                    console.log("🌟 Approche du nombre d'or (φ ≈ 1.618)!");
+                }
+            }
+            
+            return sequence;
+        }
+
+        // Fonctions de test
+        function testStringFunctions() {
+            const results = document.getElementById('string-results');
+            let output = '<div class="result success">';
+            
+            output += `<p><strong>reverseString("hello"):</strong> "${reverseString("hello")}"</p>`;
+            output += `<p><strong>reverseString("radar"):</strong> "${reverseString("radar")}" (palindrome!)</p>`;
+            output += `<p><strong>countCharacters("JavaScript"):</strong> ${countCharacters("JavaScript")}</p>`;
+            output += `<p><strong>capitalizeWords("j'aime javascript"):</strong> "${capitalizeWords("j'aime javascript")}"</p>`;
+            
+            output += '</div>';
+            results.innerHTML = output;
+        }
+
+        function testArrayFunctions() {
+            const results = document.getElementById('array-results');
+            const testArray = [1, 5, 3, 9, 2, 8, 1337];
+            let output = '<div class="result success">';
+            
+            output += `<p><strong>findMax([1, 5, 3, 9, 2, 8, 1337]):</strong> ${findMax(testArray)}</p>`;
+            output += `<p><strong>findMin([1, 5, 3, 9, 2, 8, 1337]):</strong> ${findMin(testArray)}</p>`;
+            output += `<p><strong>sumArray([10, 20, 30, 40]):</strong> ${sumArray([10, 20, 30, 40])}</p>`;
+            output += `<p><strong>filterArray([1,2,3,4,5,6,7], "even"):</strong> [${filterArray([1,2,3,4,5,6,7], "even")}]</p>`;
+            output += `<p><strong>filterArray([1,7,13,5,777], "lucky"):</strong> [${filterArray([1,7,13,5,777], "lucky")}]</p>`;
+            
+            output += '</div>';
+            results.innerHTML = output;
+        }
+
+        function testMathFunctions() {
+            const results = document.getElementById('math-results');
+            let output = '<div class="result success">';
+            
+            output += `<p><strong>factorial(5):</strong> ${factorial(5)}</p>`;
+            output += `<p><strong>isPrime(17):</strong> ${isPrime(17)}</p>`;
+            output += `<p><strong>isPrime(1337):</strong> ${isPrime(1337)}</p>`;
+            output += `<p><strong>fibonacci(8):</strong> [${fibonacci(8)}]</p>`;
+            
+            output += '</div>';
+            results.innerHTML = output;
+        }
+
+        // Easter eggs functions
+        function triggerEasterEgg() {
+            document.getElementById('hidden-message').style.display = 'block';
+        }
+
+        function closeHiddenMessage() {
+            document.getElementById('hidden-message').style.display = 'none';
+        }
+
+        function createFloatingEmoji() {
+            const emojis = ['🥚', '🐰', '🌸', '🎉', '✨', '🦄', '🌈', '🎊'];
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            const floatingEmoji = document.createElement('div');
+            floatingEmoji.className = 'floating-emoji';
+            floatingEmoji.textContent = emoji;
+            floatingEmoji.style.left = Math.random() * window.innerWidth + 'px';
+            floatingEmoji.style.top = Math.random() * window.innerHeight + 'px';
+            
+            document.body.appendChild(floatingEmoji);
+            
+            setTimeout(() => {
+                document.body.removeChild(floatingEmoji);
+            }, 3000);
+        }
+
+        // Konami Code Easter Egg
+        let konamiCode = [];
+        const konamiSequence = [
+            'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+            'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+            'KeyB', 'KeyA'
+        ];
+
+        document.addEventListener('keydown', function(e) {
+            konamiCode.push(e.code);
+            
+            if (konamiCode.length > konamiSequence.length) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.length === konamiSequence.length &&
+                konamiCode.every((key, i) => key === konamiSequence[i])) {
+                
+                // Super Easter Egg!
+                document.body.style.transform = 'rotate(360deg)';
+                document.body.style.transition = 'transform 2s';
+                
+                setTimeout(() => {
+                    alert('🎮 KONAMI CODE ACTIVATED! 🎮\n\nVous êtes des vrais gamers! 👾\n\nBonus: Toutes vos fonctions sont maintenant 30% plus rapides*\n\n*Pas vraiment, mais c\'est l\'intention qui compte! 😄');
+                    document.body.style.transform = 'rotate(0deg)';
+                }, 2000);
+                
+                konamiCode = [];
+            }
+        });
+
+        // Auto-test au chargement pour montrer que ça marche
+        setTimeout(() => {
+            console.log("🎉 Bienvenue dans l'Easter Egg JavaScript!");
+            console.log("Ouvre la console pour voir tous les messages cachés!");
+        }, 1000);
+    </script>
+</body>
+</html>
