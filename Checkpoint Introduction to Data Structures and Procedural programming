@@ -1,0 +1,161 @@
+
+ PROBLEM 1: Sum of Distinct Elements
+
+ALGORITHM SumOfDistinctElements
+INPUT: array1[0..n1-1], array2[0..n2-1], n1, n2
+OUTPUT: sum of all distinct elements
+
+BEGIN
+    sum ← 0
+    
+    Check elements from array1 that are not in array2
+    FOR i ← 0 TO n1-1 DO
+        found ← FALSE
+        FOR j ← 0 TO n2-1 DO
+            IF array1[i] = array2[j] THEN
+                found ← TRUE
+                BREAK
+            END IF
+        END FOR
+        
+        IF found = FALSE THEN
+            sum ← sum + array1[i]
+        END IF
+    END FOR
+    
+    // Check elements from array2 that are not in array1
+    FOR i ← 0 TO n2-1 DO
+        found ← FALSE
+        FOR j ← 0 TO n1-1 DO
+            IF array2[i] = array1[j] THEN
+                found ← TRUE
+                BREAK
+            END IF
+        END FOR
+        
+        IF found = FALSE THEN
+            sum ← sum + array2[i]
+        END IF
+    END FOR
+    
+    RETURN sum
+END
+
+ Example execution:
+ Set 1: [3, 1, 7, 9], Set 2: [2, 4, 1, 9, 3]
+ Distinct elements: 7 (from set1), 2, 4 (from set2)
+ Sum = 7 + 2 + 4 = 13
+
+
+ PROBLEM 2: Dot Product and Orthogonal Vectors
+Part 1: Dot Product Procedure
+PROCEDURE dot_product(v1[], v2[], size, ps)
+ Parameters: v1[], v2[] passed by reference (input arrays)
+     size passed by value (vector dimension)
+   ps passed by reference (output - dot product result)
+BEGIN
+    ps ← 0
+    FOR i ← 0 TO size-1 DO
+        ps ← ps + (v1[i] * v2[i])
+    END FOR
+END PROCEDURE
+
+  Part 2: Algorithm to check orthogonality for n pairs of vectors
+ALGORITHM CheckOrthogonalVectors
+INPUT: n (number of vector pairs), vector_size (dimension of each vector)
+OUTPUT: Display whether each pair is orthogonal or not
+
+BEGIN
+    FOR pair ← 1 TO n DO
+        WRITE "Enter vector pair ", pair, ":"
+        
+         Input first vector
+        DECLARE v1[vector_size]
+        WRITE "Enter ", vector_size, " elements for vector 1:"
+        FOR i ← 0 TO vector_size-1 DO
+            READ v1[i]
+        END FOR
+        
+        // Input second vector
+        DECLARE v2[vector_size]
+        WRITE "Enter ", vector_size, " elements for vector 2:"
+        FOR i ← 0 TO vector_size-1 DO
+            read v2[i]
+        END FOR
+        
+        Calculate dot product using procedure
+        DECLARE dot_result
+        CALL dot_product(v1, v2, vector_size, dot_result)
+        
+        Check if vectors are orthogonal
+        IF dot_result = 0 THEN
+            WRITE "Vector pair ", pair, " is orthogonal"
+        ELSE
+            WRITE "Vector pair ", pair, " is not orthogonal"
+            WRITE "Dot product = ", dot_result
+        END IF
+        
+        WRITE  blank line for readability
+    END FOR
+END
+
+ Part 3: Modified algorithm using dot_product as a function
+FUNCTION dot_product_func(v1[], v2[], size) : REAL
+Parameters: v1[], v2[] passed by reference (input arrays)
+           size passed by value (vector dimension)
+Returns: dot product result
+BEGIN
+    result ← 0
+    FOR i ← 0 TO size-1 DO
+        result ← result + (v1[i] * v2[i])
+    END FOR
+    RETURN result
+END FUNCTION
+
+ALGORITHM CheckOrthogonalVectorsWithFunction
+INPUT: n (number of vector pairs), vector_size (dimension of each vector)
+OUTPUT: Display whether each pair is orthogonal or not
+
+BEGIN
+    FOR pair ← 1 TO n DO
+        WRITE "Enter vector pair ", pair, ":"
+        
+        Input first vector
+        DECLARE v1[vector_size]
+        WRITE "Enter ", vector_size, " elements for vector 1:"
+        FOR i ← 0 TO vector_size-1 DO
+            read v1[i]
+        END FOR
+        Input second vector
+        DECLARE v2[vector_size]
+        WRITE "Enter ", vector_size, " elements for vector 2:"
+        FOR i ← 0 TO vector_size-1 DO
+            read v2[i]
+        END FOR
+        Calculate dot product using function
+        dot_result ← dot_product_func(v1, v2, vector_size)
+         Check if vectors are orthogonal
+        IF dot_result = 0 THEN
+            WRITE "Vector pair ", pair, " is orthogonal"
+        ELSE
+            WRITE "Vector pair ", pair, " is not orthogonal"
+            WRITE "Dot product = ", dot_result
+        END IF
+        
+        WRITE "" // blank line for readability
+    END FOR
+END
+
+ PARAMETER PASSING TYPES USED:
+Pass by Value: size, vector_size, n, pair
+Copies are made, original values unchanged
+pass by Reference: arrays v1[], v2[], variable ps
+Original memory locations accessed directly
+Function Return: dot_product_func returns result by value
+
+
+ EXAMPLE USAGE:
+ For orthogonal vectors: [1, 0, 0] and [0, 1, 0]
+ Dot product = 1*0 + 0*1 + 0*0 = 0 (orthogonal)
+For non-orthogonal vectors: [1, 2, 3] and [2, 1, 1]  
+ Dot product = 1*2 + 2*1 + 3*1 = 7 (not orthogonal)
