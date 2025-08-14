@@ -1,0 +1,218 @@
+// Shopping Cart Data Structure
+let cart = {
+  1: { quantity: 0, price: 100, name: 'Premium Baskets', liked: false },
+  2: { quantity: 0, price: 20, name: 'Cozy Cotton Socks', liked: false },
+  3: { quantity: 0, price: 50, name: 'Designer Leather Bag', liked: false }
+};
+
+// DOM Elements
+const totalAmount = document.getElementById('totalAmount');
+const notification = document.getElementById('notification');
+
+// Initialize particles background
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  const particleCount = 20;
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 6 + 's';
+    particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+    particlesContainer.appendChild(particle);
+  }
+}
+
+// Show notification
+function showNotification(message, type = 'success') {
+  notification.textContent = message;
+  notification.className = `notification ${type}`;
+  notification.classList.add('show');
+  
+  setTimeout(() => {
+    notification.classList.remove('show');
+  }, 3000);
+}
+
+// Update total price with animation
+function updateTotalPrice() {
+  let total = 0;
+  Object.values(cart).forEach(item => {
+    total += item.quantity * item.price;
+  });
+  
+  totalAmount.textContent = `${total} $`;
+  totalAmount.classList.add('bounce');
+  
+  setTimeout(() => {
+    totalAmount.classList.remove('bounce');
+  }, 500);
+  
+  return total;
+}
+
+// Get quantity element for specific product
+function getQuantityElement(productId) {
+  const card = document.querySelector(`[data-id="${productId}"]`);
+  return card.querySelector('.quantity');
+}
+
+// Add pulse animation to quantity
+function animateQuantity(productId) {
+  const quantityElement = getQuantityElement(productId);
+  quantityElement.classList.add('pulse');
+  setTimeout(() => {
+    quantityElement.classList.remove('pulse');
+  }, 300);
+}
+
+// Increase quantity function
+function increaseQuantity(productId) {
+  cart[productId].quantity++;
+  const quantityElement = getQuantityElement(productId);
+  quantityElement.textContent = cart[productId].quantity;
+  
+  animateQuantity(productId);
+  const total = updateTotalPrice();
+  
+  showNotification(`${cart[productId].name} added! Quantity: ${cart[productId].quantity}`, 'success');
+}
+
+// Decrease quantity function
+function decreaseQuantity(productId) {
+  if (cart[productId].quantity > 0) {
+    cart[productId].quantity--;
+    const quantityElement = getQuantityElement(productId);
+    quantityElement.textContent = cart[productId].quantity;
+    
+    animateQuantity(productId);
+    updateTotalPrice();
+    
+    if (cart[productId].quantity === 0) {
+      showNotification(`${cart[productId].name} removed from cart!`, 'info');
+    } else {
+      showNotification(`${cart[productId].name} quantity decreased to ${cart[productId].quantity}`, 'info');
+    }
+  } else {
+    showNotification(`${cart[productId].name} is already at 0 quantity!`, 'error');
+  }
+}
+
+// Delete item from cart
+function deleteItem(productId) {
+  const wasInCart = cart[productId].quantity > 0;
+  cart[productId].quantity = 0;
+  cart[productId].liked = false;
+  
+  const quantityElement = getQuantityElement(productId);
+  const heartElement = document.querySelector(`[data-id="${productId}"] .fa-heart`);
+  const cardElement = document.querySelector(`[data-id="${productId}"]`);
+  
+  // Animate card removal
+  cardElement.classList.add('fade-out');
+  
+  setTimeout(() => {
+    quantityElement.textContent = '0';
+    heartElement.classList.remove('liked');
+    cardElement.classList.remove('fade-out');
+    updateTotalPrice();
+  }, 300);
+  
+  if (wasInCart) {
+    showNotification(`${cart[productId].name} completely removed from cart!`, 'error');
+  } else {
+    showNotification(`${cart[productId].name} was already removed!`, 'info');
+  }
+}
+
+// Toggle like/unlike item
+function toggleLike(productId) {
+  cart[productId].liked = !cart[productId].liked;
+  const heartElement = document.querySelector(`[data-id="${productId}"] .fa-heart`);
+  
+  if (cart[productId].liked) {
+    heartElement.classList.add('liked');
+    showNotification(`${cart[productId].name} added to favorites! ❤️`, 'success');
+  } else {
+    heartElement.classList.remove('liked');
+    showNotification(`${cart[productId].name} removed from favorites`, 'info');
+  }
+  
+  // Add a little bounce animation to the heart
+  heartElement.style.transform = 'scale(1.3)';
+  setTimeout(() => {
+    heartElement.style.transform = 'scale(1)';
+  }, 200);
+}
+
+// Add keyboard navigation support
+document.addEventListener('keydown', function(event) {
+  if (event.target.tagName === 'BODY') {
+    switch(event.key) {
+      case '1':
+        increaseQuantity(1);
+        break;
+      case '2':
+        increaseQuantity(2);
+        break;
+      case '3':
+        increaseQuantity(3);
+        break;
+    }
+  }
+});
+
+// Add hover effects for better user experience
+document.querySelectorAll('.fa-plus-circle, .fa-minus-circle').forEach(icon => {
+  icon.addEventListener('mouseenter', function() {
+    this.style.transform = 'scale(1.1)';
+  });
+  
+  icon.addEventListener('mouseleave', function() {
+    this.style.transform = 'scale(1)';
+  });
+});
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+  createParticles();
+  updateTotalPrice();
+  showNotification('Welcome to Shopping Cart Pro! 🛒', 'success');
+  
+  // Add some initial animation to cards
+  setTimeout(() => {
+    document.querySelectorAll('.card').forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        card.style.transition = 'all 0.5s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, index * 200);
+    });
+  }, 100);
+});
+
+// Add some extra interactivity - double click to add 5 items
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('dblclick', function() {
+    const productId = parseInt(this.dataset.id);
+    for(let i = 0; i < 5; i++) {
+      setTimeout(() => increaseQuantity(productId), i * 100);
+    }
+    showNotification(`Quick added 5 ${cart[productId].name}!`, 'success');
+  });
+});
+
+// Add search functionality to the search bar
+document.querySelector('form.d-flex').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const searchTerm = this.querySelector('input').value.toLowerCase();
+  
+  if (searchTerm) {
+    showNotification(`Searching for "${searchTerm}"... (Demo mode)`, 'info');
+  }
+});
