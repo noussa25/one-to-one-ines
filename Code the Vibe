@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Showcase Gallery</title>
+    <style>
+        :root {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --card-bg: #fff;
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --toggle-bg: #e0e0e0;
+            --toggle-handle: #fff;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #f5f5f5;
+            --card-bg: #1e1e1e;
+            --card-shadow: rgba(0, 0, 0, 0.3);
+            --primary-color: #6d9ee6;
+            --secondary-color: #4a8bc7;
+            --toggle-bg: #333;
+            --toggle-handle: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 2rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: var(--toggle-bg);
+            cursor: pointer;
+        }
+
+        .toggle-handle {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--toggle-handle);
+            transition: transform 0.3s;
+        }
+
+        .dark-mode .toggle-handle {
+            transform: translateX(30px);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardFadeIn 0.5s ease-in forwards;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--card-shadow);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .card-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .card-desc {
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .card-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .card-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--card-shadow);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Product Gallery</h1>
+        <div class="theme-toggle" id="themeToggle">
+            <div class="toggle-handle"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="gallery">
+            <div class="card">
+                <img src="https://tse1.mm.bing.net/th/id/OIP.bAWyaXYL87ffDkUUFP2I1wHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Smart Watch" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Premium Smart Watch</h3>
+                    <p class="card-price">$249.99</p>
+                    <p class="card-desc">Stay connected with our latest smartwatch featuring health tracking, notifications, and 7-day battery life.</p>
+                    <a href="#" class="card-btn">Add to Cart</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.SGt8I-OB3VfC_iGeyIHPlQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Wireless Headphones" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Wireless Headphones</h3>
+                    <p class="card-price">$179.99</p>
+                    <p class="card-desc">Experience crystal-clear sound with noise cancellation and 30-hour playtime.</p>
+                    <a href="#" class="card-btn">Add to Cart</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.fSblUL0xbl1SBUgLyIcuigHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Mirrorless Camera" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Mirrorless Camera</h3>
+                    <p class="card-price">$899.99</p>
+                    <p class="card-desc">Professional-grade mirrorless camera with 4K video and 24MP sensor.</p>
+                    <a href="#" class="card-btn">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Product Gallery. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // Check for saved theme preference or use system preference
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+                document.body.classList.add('dark-mode');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                localStorage.setItem('theme', theme);
+            });
+            
+            // Card hover effects are handled by CSS
+            // Animation is handled by CSS animations
+        });
+    </script>
+</body>
+</html>
